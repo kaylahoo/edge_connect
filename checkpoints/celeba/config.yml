@@ -12,7 +12,7 @@ TRAIN_FLIST: ./datasets/celeba_train.flist
 VAL_FLIST: ./datasets/celeba_train.flist
 TEST_FLIST: ./datasets/celeba_test.flist
 
-TRAIN_EDGE_FLIST: ./datasets/celeba_edges_train.flist
+TRAIN_EDGE_FLIST: ./datasets/celeba_edges_train.flis
 VAL_EDGE_FLIST: ./datasets/celeba_edges_val.flist
 TEST_EDGE_FLIST: ./datasets/celeba_edges_test.flist
 
