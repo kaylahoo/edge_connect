@@ -48,7 +48,7 @@ class EdgeConnect():
 
         self.log_file = os.path.join(config.PATH, 'log_' + model_name + '.dat')
 
-    def load(self):
+    def load(self):#   改动了
         if self.config.MODEL == 1:
             self.edge_model.load()
 
@@ -96,13 +96,13 @@ class EdgeConnect():
             progbar = Progbar(total, width=20, stateful_metrics=['epoch', 'iter'])
 
             for items in train_loader:
-                self.edge_model.train()
+                self.edge_model.train()#改动 去掉了
                 self.inpaint_model.train()
 
                 images, images_gray, edges, masks = self.cuda(*items)
 
                 # edge model
-                if model == 1:
+                if model == 1:#改动 去掉了
                     # train
                     outputs, gen_loss, dis_loss, logs = self.edge_model.process(images_gray, edges, masks)
 
