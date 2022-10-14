@@ -76,7 +76,7 @@ class EdgeConnect():
             batch_size=self.config.BATCH_SIZE,
             num_workers=4,
             drop_last=True,
-            shuffle=True
+            shuffle=False
         )
 
         epoch = 0
