@@ -17,4 +17,7 @@ for root, dirs, files in os.walk(args.path):
             images.append(os.path.join(root, file))
 
 images = sorted(images)
-np.savetxt(args.output, images, fmt='%s')
+img1 = images[:28000]
+img2 = images[28000:]
+np.savetxt(args.output+'_train.flist', img1, fmt='%s')
+np.savetxt(args.output+'_test.flist', img2, fmt='%s')
