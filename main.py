@@ -27,6 +27,7 @@ def main(mode=None):
     if torch.cuda.is_available():
         print("True!!!!!!!!!!!!!!")
         config.DEVICE = torch.device("cuda")
+        print(config.DEVICE)
         torch.backends.cudnn.benchmark = True   # cudnn auto-tuner
     else:
         print("False!!!!!!!!!!!!!!")
