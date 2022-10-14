@@ -8,8 +8,8 @@
 
 import torch
 import torch.nn.functional as F
-from torch import nn, cuda
-from torch.autograd import Variable
+from torch import nn
+#from torch.autograd import Variable
 
 
 class PartialConv2d(nn.Conv2d):
@@ -107,7 +107,7 @@ class PConvBNActiv(nn.Module):
                                       multi_channel=True)
 
         elif sample == 'down-31':
-            self.Dconv = Depthwise_separable_conv(in_channels, out_channels, use_sync_bn=True, kernel_size=31, stride=1,
+            self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=31, stride=1,
                                                   padding=15, groups=in_channels)
         elif sample == 'down-29':
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=29, stride=2, padding=14,
