@@ -84,7 +84,7 @@ class EdgeModel(BaseModel):
             betas=(config.BETA1, config.BETA2)
         )
 
-    def process(self, images, edges, masks):
+    def process(self, images, masks):
         self.iteration += 1
 
 
@@ -94,13 +94,14 @@ class EdgeModel(BaseModel):
 
 
         # process outputs
-        outputs = self(images, edges, masks)
+        outputs = self(images, masks)
         gen_loss = 0
         dis_loss = 0
 
 
         # discriminator loss
-        dis_input_real = torch.cat((images, edges), dim=1)
+        #dis_input_real = torch.cat((images, edges), dim=1)
+        dis_input_real = images
         dis_input_fake = torch.cat((images, outputs.detach()), dim=1)
         dis_real, dis_real_feat = self.discriminator(dis_input_real)        # in: (grayscale(1) + edge(1))
         dis_fake, dis_fake_feat = self.discriminator(dis_input_fake)        # in: (grayscale(1) + edge(1))
@@ -133,11 +134,14 @@ class EdgeModel(BaseModel):
 
         return outputs, gen_loss, dis_loss, logs
 
-    def forward(self, images, edges, masks):
-        edges_masked = (edges * (1 - masks))
-        images_masked = (images * (1 - masks)) + masks
-        inputs = torch.cat((images_masked, edges_masked, masks), dim=1)
-        outputs = self.generator(inputs)                                    # in: [grayscale(1) + edge(1) + mask(1)]
+    def forward(self, images, masks):
+        # edges_masked = (edges * (1 - masks))
+        # images_masked = (images * (1 - masks)) + masks
+        # inputs = torch.cat((images_masked, edges_masked, masks), dim=1)
+        # outputs = self.generator(inputs)                                    # in: [grayscale(1) + edge(1) + mask(1)]
+        images_masked = images * masks.float()
+        inputs = torch.cat((images_masked, masks), dim=1)
+        outputs = self.generator(inputs)
         return outputs
 
     def backward(self, gen_loss=None, dis_loss=None):
