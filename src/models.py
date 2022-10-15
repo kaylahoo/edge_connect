@@ -188,7 +188,7 @@ class InpaintingModel(BaseModel):
             betas=(config.BETA1, config.BETA2)
         )
 
-    def process(self, images, edges, masks):
+    def process(self, images, masks):
         self.iteration += 1
 
         # zero optimizers
