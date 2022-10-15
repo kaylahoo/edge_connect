@@ -14,25 +14,27 @@ from .utils import create_mask
 
 
 class Dataset(torch.utils.data.Dataset):
-    def __init__(self, config, flist, edge_flist, mask_flist, augment=True, training=True):
+    def __init__(self, config, flist, mask_flist, augment=True, training=True,mask_reverse = False):
         super(Dataset, self).__init__()
         self.augment = augment
         self.training = training
+        self.mask_reverse = mask_reverse#新加
         self.data = self.load_flist(flist)
-        self.edge_data = self.load_flist(edge_flist)
+        #self.edge_data = self.load_flist(edge_flist)
         self.mask_data = self.load_flist(mask_flist)
 
         self.input_size = config.INPUT_SIZE
         self.sigma = config.SIGMA
-        self.edge = config.EDGE
+        #self.edge = config.EDGE
         self.mask = config.MASK
         self.nms = config.NMS
 
         # in test mode, there's a one-to-one relationship between mask and image
         # masks are loaded non random
-        if config.MODE == 2:
-            self.mask = 6
-
+        #if config.MODE == 2:
+            #self.mask = 6
+        if config.MODE == 2 and config.MASK != 2 and config.MASK != 7:
+                    self.mask = 6
     def __len__(self):
         return len(self.data)
 
@@ -73,16 +75,16 @@ class Dataset(torch.utils.data.Dataset):
         mask = self.load_mask(img, index)
 
         # load edge
-        edge = self.load_edge(img_gray, index, mask)
+        #edge = self.load_edge(img_gray, index, mask)
 
         # augment data
         if self.augment and np.random.binomial(1, 0.5) > 0:
             img = img[:, ::-1, ...]
-            img_gray = img_gray[:, ::-1, ...]
-            edge = edge[:, ::-1, ...]
+            #img_gray = img_gray[:, ::-1, ...]
+            #edge = edge[:, ::-1, ...]
             mask = mask[:, ::-1, ...]
 
-        return self.to_tensor(img), self.to_tensor(img_gray), self.to_tensor(edge), self.to_tensor(mask)
+        return self.to_tensor(img), self.to_tensor(mask)#self.to_tensor(img_gray), self.to_tensor(edge), self.to_tensor(mask)
 
     def load_edge(self, img, index, mask):
         sigma = self.sigma
@@ -141,16 +143,37 @@ class Dataset(torch.utils.data.Dataset):
             mask_index = random.randint(0, len(self.mask_data) - 1)
             mask = imread(self.mask_data[mask_index])
             mask = self.resize(mask, imgh, imgw)
-            mask = (mask > 0).astype(np.uint8) * 255       # threshold due to interpolation
-            return mask
+            #mask = (mask > 0).astype(np.uint8) * 255       # threshold due to interpolation
+            #return mask
+            mask = (mask > 0).astype(np.uint8)  # threshold due to interpolation
+            if self.mask_reverse:
+                return (1 - mask) * 255  # hole:0
+            else:
+                return mask * 255  # hole:255
 
         # test mode: load mask non random
         if mask_type == 6:
             mask = imread(self.mask_data[index])
             mask = self.resize(mask, imgh, imgw, centerCrop=False)
             mask = rgb2gray(mask)
-            mask = (mask > 0).astype(np.uint8) * 255
-            return mask
+            mask = (mask > 0).astype(np.uint8) #* 255
+            #return mask
+            mask = (mask > 0).astype(np.uint8)#新加160-164
+            if self.mask_reverse:
+                return (1 - mask) * 255
+            else:
+                return mask * 255
+        # test: random  #新加165-175
+        if mask_type == 7:
+            mask_index = random.randint(0, len(self.mask_data) - 1)
+            mask = imread(self.mask_data[mask_index])
+            mask = self.resize(mask, imgh, imgw, centerCrop=False)
+            mask = rgb2gray(mask)
+            mask = (mask > 0).astype(np.uint8)
+            if self.mask_reverse:
+                return (1 - mask) * 255
+            else:
+                return mask * 255
 
     def to_tensor(self, img):
         img = Image.fromarray(img)
