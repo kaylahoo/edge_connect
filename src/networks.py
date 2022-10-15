@@ -107,12 +107,13 @@ class InpaintGenerator(BaseNetwork):
                 self.init_weights()
 
 
-        def forward(self, input_image, input_edge, mask):
+        def forward(self, images, masks):
 
             ec_textures = {}
             ec_structures = {}
+            input_image = images * masks
 
-            input_texture_mask = torch.cat((mask, mask, mask), dim=1)
+            input_texture_mask = torch.cat((masks, masks, masks), dim=1)
             ec_textures['ec_t_0'], ec_textures['ec_t_masks_0'] = input_image, input_texture_mask
             ec_textures['ec_t_1'], ec_textures['ec_t_masks_1'] = self.ec_texture_1(ec_textures['ec_t_0'],
                                                                                    ec_textures['ec_t_masks_0'])
@@ -129,8 +130,8 @@ class InpaintGenerator(BaseNetwork):
             ec_textures['ec_t_7'], ec_textures['ec_t_masks_7'] = self.ec_texture_7(ec_textures['ec_t_6'],
                                                                                    ec_textures['ec_t_masks_6'])
 
-            input_structure_mask = torch.cat((mask, mask), dim=1)
-            ec_structures['ec_s_0'], ec_structures['ec_s_masks_0'] = input_edge, input_structure_mask
+            input_structure_mask = torch.cat((masks, masks,masks), dim=1)
+            ec_structures['ec_s_0'], ec_structures['ec_s_masks_0'] = input_image, input_structure_mask
             ec_structures['ec_s_1'], ec_structures['ec_s_masks_1'] = self.ec_structure_1(ec_structures['ec_s_0'],
                                                                                          ec_structures['ec_s_masks_0'])
             ec_structures['ec_s_2'], ec_structures['ec_s_masks_2'] = self.ec_structure_2(ec_structures['ec_s_1'],
