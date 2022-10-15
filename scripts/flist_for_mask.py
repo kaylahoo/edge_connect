@@ -21,7 +21,8 @@ for root, dirs, files in os.walk(args.path):
             img = Image.open(path)
             height, weight = img.size
             img_arr = np.array(img)
-            ratio = int(np.count_nonzero(img_arr) / (height * weight) * 10)
+            ratio = np.count_nonzero(img_arr) / (height * weight)
+
             if ratio >= 0.2 and ratio < 0.4:
                 img1.append(path)
             if ratio >= 0.4:
