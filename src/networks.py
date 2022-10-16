@@ -63,18 +63,18 @@ class InpaintGenerator(BaseNetwork):
             self.ec_texture_6 = PConvBNActiv(512, 512, sample='down-3')
             self.ec_texture_7 = PConvBNActiv(512, 512, sample='down-3')
 
-            self.dc_texture_7 = PConvBNActiv(512 + 512, 512, activ='leaky',type='samll')
-            self.dc_texture_6 = PConvBNActiv(512 + 512, 512, activ='leaky',type='samll')
-            self.dc_texture_5 = PConvBNActiv(512 + 512, 512, activ='leaky',type='samll')
-            self.dc_texture_4 = PConvBNActiv(512 + 256, 256, activ='leaky',type='samll')
-            self.dc_texture_3 = PConvBNActiv(256 + 128, 128, activ='leaky',type='samll')
-            self.dc_texture_2 = PConvBNActiv(128 + 64, 64, activ='leaky',type='samll')
-            self.dc_texture_1 = PConvBNActiv(64 + out_channels, 64, activ='leaky',type='samll')
+            self.dc_texture_7 = PConvBNActiv(512 + 512, 512, activ='leaky')
+            self.dc_texture_6 = PConvBNActiv(512 + 512, 512, activ='leaky')
+            self.dc_texture_5 = PConvBNActiv(512 + 512, 512, activ='leaky')
+            self.dc_texture_4 = PConvBNActiv(512 + 256, 256, activ='leaky')
+            self.dc_texture_3 = PConvBNActiv(256 + 128, 128, activ='leaky')
+            self.dc_texture_2 = PConvBNActiv(128 + 64, 64, activ='leaky')
+            self.dc_texture_1 = PConvBNActiv(64 + out_channels, 64, activ='leaky')
 
             # -------------------------
             # large encoder-decoder
             # -------------------------
-            self.ec_structure_1 = DepConvBNActiv(edge_in_channels, 64, bn=False, sample='down-31',groups=edge_in_channels)
+            self.ec_structure_1 = DepConvBNActiv(edge_in_channels, 64, sample='down-31',groups=edge_in_channels)
             self.ec_structure_2 = DepConvBNActiv(64, 128, sample='down-29',groups=64)
             self.ec_structure_3 = DepConvBNActiv(128, 256, sample='down-27',groups=128)
             self.ec_structure_4 = DepConvBNActiv(256, 512, sample='down-13',groups=256)
@@ -82,13 +82,13 @@ class InpaintGenerator(BaseNetwork):
             self.ec_structure_6 = DepConvBNActiv(512, 512, sample='down-13',groups=512)
             self.ec_structure_7 = DepConvBNActiv(512, 512, sample='down-13',groups=512)
 
-            self.dc_structure_7 = DepConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
-            self.dc_structure_6 = DepConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
-            self.dc_structure_5 = DepConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
-            self.dc_structure_4 = DepConvBNActiv(512 + 256, 256, activ='leaky', type='large',groups=256)
-            self.dc_structure_3 = DepConvBNActiv(256 + 128, 128, activ='leaky', type='large',groups=128)
-            self.dc_structure_2 = DepConvBNActiv(128 + 64, 64, activ='leaky', type='large',groups=64)
-            self.dc_structure_1 = DepConvBNActiv(64 , 64, activ='leaky', type='large',groups=64)
+            self.dc_structure_7 = DepConvBNActiv(512 + 512, 512,groups=512)
+            self.dc_structure_6 = DepConvBNActiv(512 + 512, 512,groups=512)
+            self.dc_structure_5 = DepConvBNActiv(512 + 512, 512,groups=512)
+            self.dc_structure_4 = DepConvBNActiv(512 + 256, 256,groups=256)
+            self.dc_structure_3 = DepConvBNActiv(256 + 128, 128,groups=128)
+            self.dc_structure_2 = DepConvBNActiv(128 + 64, 64,groups=64)
+            self.dc_structure_1 = DepConvBNActiv(64 , 64,groups=64)
 
             self.fusion_layer1 = nn.Sequential(
                 nn.Conv2d(64 + 64, 64, kernel_size=3, stride=1, padding=1),
