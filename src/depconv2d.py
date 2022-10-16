@@ -37,6 +37,8 @@ class DepConvBNActiv(nn.Module):
     def forward(self, images, masks):
 
         images, masks = self.Dconv(images, masks)
+        print('here',images.shape)
+        print('here',masks.shape)
 
 
         return images, masks
