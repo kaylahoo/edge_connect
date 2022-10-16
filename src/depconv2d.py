@@ -72,4 +72,7 @@ class Depthwise_separable_conv(nn.Module):
 
         images = self.pointwise_conv(images)
         masks = self.pointwise_conv(masks)
+        print('new',images.shape)
+        print('new', masks.shape)
+
         return images, masks
