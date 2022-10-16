@@ -45,7 +45,7 @@ class BaseNetwork(nn.Module):
 class InpaintGenerator(BaseNetwork):
     #class Generator(nn.Module):
 
-        def __init__(self, image_in_channels=3, edge_in_channels=3, out_channels=3, init_weights=True):
+        def __init__(self, image_in_channels=4, edge_in_channels=3, out_channels=3, init_weights=True):
             super(InpaintGenerator, self).__init__()
 
             self.freeze_ec_bn = False
