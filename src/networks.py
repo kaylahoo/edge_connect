@@ -87,7 +87,7 @@ class InpaintGenerator(BaseNetwork):
             self.dc_structure_4 = PConvBNActiv(512 + 256, 256, activ='leaky', type='large',groups=256)
             self.dc_structure_3 = PConvBNActiv(256 + 128, 128, activ='leaky', type='large',groups=128)
             self.dc_structure_2 = PConvBNActiv(128 + 64, 64, activ='leaky', type='large',groups=64)
-            self.dc_structure_1 = PConvBNActiv(64 + 2, 64, activ='leaky', type='large',groups=64)
+            self.dc_structure_1 = PConvBNActiv(64 , 64, activ='leaky', type='large',groups=64)
 
             self.fusion_layer1 = nn.Sequential(
                 nn.Conv2d(64 + 64, 64, kernel_size=3, stride=1, padding=1),
