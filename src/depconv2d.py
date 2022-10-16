@@ -27,13 +27,11 @@ class DepConvBNActiv(nn.Module):
                                                   groups=groups)
 
     def forward(self, images, masks):
-        print('here', images.shape)
-        print('here', masks.shape)
+
 
         images, masks = self.Dconv(images, masks)
-
-
-
+        print('here', images.shape)
+        print('here', masks.shape)
 
         return images, masks
 
