@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from src.partialconv2d import PartialConv2d #加
 from src.partialconv2d import PConvBNActiv #加
+from src.depconv2d import DepConvBNActiv
 import torch.nn.functional as F # 加
 #from timm.models.layers import DropPath
 
@@ -73,21 +74,21 @@ class InpaintGenerator(BaseNetwork):
             # -------------------------
             # large encoder-decoder
             # -------------------------
-            self.ec_structure_1 = PConvBNActiv(edge_in_channels, 64, bn=False, sample='down-31',groups=edge_in_channels)
-            self.ec_structure_2 = PConvBNActiv(64, 128, sample='down-29',groups=64)
-            self.ec_structure_3 = PConvBNActiv(128, 256, sample='down-27',groups=128)
-            self.ec_structure_4 = PConvBNActiv(256, 512, sample='down-13',groups=256)
-            self.ec_structure_5 = PConvBNActiv(512, 512, sample='down-13',groups=512)
-            self.ec_structure_6 = PConvBNActiv(512, 512, sample='down-13',groups=512)
-            self.ec_structure_7 = PConvBNActiv(512, 512, sample='down-13',groups=512)
+            self.ec_structure_1 = DepConvBNActiv(edge_in_channels, 64, bn=False, sample='down-31',groups=edge_in_channels)
+            self.ec_structure_2 = DepConvBNActiv(64, 128, sample='down-29',groups=64)
+            self.ec_structure_3 = DepConvBNActiv(128, 256, sample='down-27',groups=128)
+            self.ec_structure_4 = DepConvBNActiv(256, 512, sample='down-13',groups=256)
+            self.ec_structure_5 = DepConvBNActiv(512, 512, sample='down-13',groups=512)
+            self.ec_structure_6 = DepConvBNActiv(512, 512, sample='down-13',groups=512)
+            self.ec_structure_7 = DepConvBNActiv(512, 512, sample='down-13',groups=512)
 
-            self.dc_structure_7 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
-            self.dc_structure_6 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
-            self.dc_structure_5 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
-            self.dc_structure_4 = PConvBNActiv(512 + 256, 256, activ='leaky', type='large',groups=256)
-            self.dc_structure_3 = PConvBNActiv(256 + 128, 128, activ='leaky', type='large',groups=128)
-            self.dc_structure_2 = PConvBNActiv(128 + 64, 64, activ='leaky', type='large',groups=64)
-            self.dc_structure_1 = PConvBNActiv(64 , 64, activ='leaky', type='large',groups=64)
+            self.dc_structure_7 = DepConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
+            self.dc_structure_6 = DepConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
+            self.dc_structure_5 = DepConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512)
+            self.dc_structure_4 = DepConvBNActiv(512 + 256, 256, activ='leaky', type='large',groups=256)
+            self.dc_structure_3 = DepConvBNActiv(256 + 128, 128, activ='leaky', type='large',groups=128)
+            self.dc_structure_2 = DepConvBNActiv(128 + 64, 64, activ='leaky', type='large',groups=64)
+            self.dc_structure_1 = DepConvBNActiv(64 , 64, activ='leaky', type='large',groups=64)
 
             self.fusion_layer1 = nn.Sequential(
                 nn.Conv2d(64 + 64, 64, kernel_size=3, stride=1, padding=1),
