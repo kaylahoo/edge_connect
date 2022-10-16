@@ -43,21 +43,21 @@ class Depthwise_separable_conv(nn.Module):
 
         self.depthwise_conv = nn.Sequential(
             nn.Conv2d(
-                in_channels,
-                out_channels,
+                in_channels=in_channels,
+                out_channels=out_channels,
                 kernel_size=kernel_size,
                 stride=stride,
                 padding=padding,
                 groups=groups,
             ),
-            #nn.SyncBatchNorm(out_channels),
+            # nn.SyncBatchNorm(out_channels),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(),
         )
         self.pointwise_conv = nn.Sequential(
             nn.Conv2d(
-                in_channels,
-                out_channels,
+                in_channels=out_channels,
+                out_channels=out_channels,
                 kernel_size=kernel_size,
                 stride=stride,
                 padding=padding,
@@ -68,10 +68,8 @@ class Depthwise_separable_conv(nn.Module):
         )
 
     def forward(self, images, masks):
-
-
         images = self.depthwise_conv(images)
-        masks  = self.depthwise_conv(masks)
+        masks = self.depthwise_conv(masks)
         print('?new', images.shape)
         print('?new', masks.shape)
 
