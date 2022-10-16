@@ -135,6 +135,9 @@ class InpaintGenerator(BaseNetwork):
                                                                                    ec_textures['ec_t_masks_5'])
             ec_textures['ec_t_7'], ec_textures['ec_t_masks_7'] = self.ec_texture_7(ec_textures['ec_t_6'],
                                                                                    ec_textures['ec_t_masks_6'])
+            print('ec7',ec_textures['ec_t_7'].shape)
+            print('ec7m', ec_textures['ec_t_masks_7'].shape)
+
 
             input_structure_mask = torch.cat((masks, masks,masks,masks), dim=1)
             ec_structures['ec_s_0'], ec_structures['ec_s_masks_0'] = input_image, input_structure_mask
