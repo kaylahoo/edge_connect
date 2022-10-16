@@ -5,8 +5,7 @@ from torch import nn
 
 class DepConvBNActiv(nn.Module):
 
-    def __init__(self, in_channels, out_channels, bn=True, sample='none-3', activ='relu', type='small', bias=False,
-                 groups=None):
+    def __init__(self, in_channels, out_channels, sample='none-3',groups=None):
         super(DepConvBNActiv, self).__init__()
         if sample == 'down-31':
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=31, stride=1,
