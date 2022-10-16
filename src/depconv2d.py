@@ -21,15 +21,7 @@ class DepConvBNActiv(nn.Module):
         elif sample == 'down-13':
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=13, stride=2, padding=6,
                                                   groups=in_channels)
-        elif sample == 'down-13':
-            self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=13, stride=2, padding=6,
-                                                  groups=in_channels)
-        elif sample == 'down-13':
-            self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=13, stride=2, padding=6,
-                                                  groups=in_channels)
-        elif sample == 'down-13':
-            self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=13, stride=2, padding=6,
-                                                  groups=in_channels)
+
         else:
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=3, stride=1, padding=1,
                                                   groups=groups)
