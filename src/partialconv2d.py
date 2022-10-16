@@ -93,7 +93,7 @@ class PartialConv2d(nn.Conv2d):
 # --------------------------
 class PConvBNActiv(nn.Module):
 
-    def __init__(self, in_channels, out_channels, bn=True, sample='none-3', activ='relu', type='small', bias=False):
+    def __init__(self, in_channels, out_channels, bn=True, sample='none-3', activ='relu', type='small', bias=False,groups=None):
         super(PConvBNActiv, self).__init__()
 
         if sample == 'down-7':
