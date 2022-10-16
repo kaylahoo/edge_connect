@@ -133,9 +133,9 @@ class PConvBNActiv(nn.Module):
             if type == 'small':
                 self.conv = PartialConv2d(in_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=bias,
                                       multi_channel=True)#原
-            else:
+            if type =='large':
                 self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=3, stride=1, padding=1,
-                                                      groups=in_channels)
+                                                      groups=groups)
 
 
         if bn:

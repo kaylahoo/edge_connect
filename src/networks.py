@@ -62,13 +62,13 @@ class InpaintGenerator(BaseNetwork):
             self.ec_texture_6 = PConvBNActiv(512, 512, sample='down-3')
             self.ec_texture_7 = PConvBNActiv(512, 512, sample='down-3')
 
-            self.dc_texture_7 = PConvBNActiv(512 + 512, 512, activ='leaky')
-            self.dc_texture_6 = PConvBNActiv(512 + 512, 512, activ='leaky')
-            self.dc_texture_5 = PConvBNActiv(512 + 512, 512, activ='leaky')
-            self.dc_texture_4 = PConvBNActiv(512 + 256, 256, activ='leaky')
-            self.dc_texture_3 = PConvBNActiv(256 + 128, 128, activ='leaky')
-            self.dc_texture_2 = PConvBNActiv(128 + 64, 64, activ='leaky')
-            self.dc_texture_1 = PConvBNActiv(64 + out_channels, 64, activ='leaky')
+            self.dc_texture_7 = PConvBNActiv(512 + 512, 512, activ='leaky',type='samll')
+            self.dc_texture_6 = PConvBNActiv(512 + 512, 512, activ='leaky',type='samll')
+            self.dc_texture_5 = PConvBNActiv(512 + 512, 512, activ='leaky',type='samll')
+            self.dc_texture_4 = PConvBNActiv(512 + 256, 256, activ='leaky',type='samll')
+            self.dc_texture_3 = PConvBNActiv(256 + 128, 128, activ='leaky',type='samll')
+            self.dc_texture_2 = PConvBNActiv(128 + 64, 64, activ='leaky',type='samll')
+            self.dc_texture_1 = PConvBNActiv(64 + out_channels, 64, activ='leaky',type='samll')
 
             # -------------------------
             # large encoder-decoder
@@ -81,13 +81,13 @@ class InpaintGenerator(BaseNetwork):
             self.ec_structure_6 = PConvBNActiv(512, 512, sample='down-13',groups=512)
             self.ec_structure_7 = PConvBNActiv(512, 512, sample='down-13',groups=512)
 
-            self.dc_structure_7 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large')
-            self.dc_structure_6 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large')
-            self.dc_structure_5 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large')
-            self.dc_structure_4 = PConvBNActiv(512 + 256, 256, activ='leaky', type='large')
-            self.dc_structure_3 = PConvBNActiv(256 + 128, 128, activ='leaky', type='large')
-            self.dc_structure_2 = PConvBNActiv(128 + 64, 64, activ='leaky', type='large')
-            self.dc_structure_1 = PConvBNActiv(64 + 2, 64, activ='leaky', type='large')
+            self.dc_structure_7 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512+512)
+            self.dc_structure_6 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512+512)
+            self.dc_structure_5 = PConvBNActiv(512 + 512, 512, activ='leaky', type='large',groups=512+512)
+            self.dc_structure_4 = PConvBNActiv(512 + 256, 256, activ='leaky', type='large',groups=512+256)
+            self.dc_structure_3 = PConvBNActiv(256 + 128, 128, activ='leaky', type='large',groups=256+128)
+            self.dc_structure_2 = PConvBNActiv(128 + 64, 64, activ='leaky', type='large',groups=128+64)
+            self.dc_structure_1 = PConvBNActiv(64 + 2, 64, activ='leaky', type='large',groups=64+2)
 
             self.fusion_layer1 = nn.Sequential(
                 nn.Conv2d(64 + 64, 64, kernel_size=3, stride=1, padding=1),
