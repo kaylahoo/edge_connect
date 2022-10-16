@@ -108,7 +108,7 @@ class PConvBNActiv(nn.Module):
 
         elif sample == 'down-31':
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=31, stride=1,
-                                                  padding=15, groups=in_channels)
+                                                  padding=15, groups=4)
         elif sample == 'down-29':
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=29, stride=2, padding=14,
                                                   groups=in_channels)
