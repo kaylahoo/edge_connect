@@ -67,6 +67,9 @@ class Depthwise_separable_conv(nn.Module):
         )
 
     def forward(self, images, masks):
+        print('?new', images.shape)
+        print('?new', masks.shape)
+
         images = self.depthwise_conv(images)
         masks  = self.depthwise_conv(masks)
 
