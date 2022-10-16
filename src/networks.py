@@ -113,16 +113,16 @@ class InpaintGenerator(BaseNetwork):
             ec_textures = {}
             ec_structures = {}
             input_image = images_masks
-            print(input_image.shape)
+
 
 
             input_texture_mask = torch.cat((masks, masks, masks,masks), dim=1)
-            print(input_texture_mask.shape )
+
 
             ec_textures['ec_t_0'], ec_textures['ec_t_masks_0'] = input_image, input_texture_mask
-            print("000", ec_textures['ec_t_0'].shape, ec_textures['ec_t_masks_0'].shape)
+
             ec_textures['ec_t_1'], ec_textures['ec_t_masks_1'] = self.ec_texture_1(ec_textures['ec_t_0'], ec_textures['ec_t_masks_0'])
-            print("111", ec_textures['ec_t_masks_1'].shape)
+
             ec_textures['ec_t_2'], ec_textures['ec_t_masks_2'] = self.ec_texture_2(ec_textures['ec_t_1'],
                                                                                    ec_textures['ec_t_masks_1'])
             ec_textures['ec_t_3'], ec_textures['ec_t_masks_3'] = self.ec_texture_3(ec_textures['ec_t_2'],
@@ -138,8 +138,12 @@ class InpaintGenerator(BaseNetwork):
 
             input_structure_mask = torch.cat((masks, masks,masks,masks), dim=1)
             ec_structures['ec_s_0'], ec_structures['ec_s_masks_0'] = input_image, input_structure_mask
+            print('000',ec_structures['ec_s_0'].shape)
+            print('111',ec_structures['ec_s_masks_0'].shape)
             ec_structures['ec_s_1'], ec_structures['ec_s_masks_1'] = self.ec_structure_1(ec_structures['ec_s_0'],
-                                                                                         ec_structures['ec_s_masks_0'])
+                                                                                        ec_structures['ec_s_masks_0'])
+            print('222', ec_structures['ec_s_0'].shape)
+            print('333', ec_structures['ec_s_masks_0'].shape)
             ec_structures['ec_s_2'], ec_structures['ec_s_masks_2'] = self.ec_structure_2(ec_structures['ec_s_1'],
                                                                                          ec_structures['ec_s_masks_1'])
             ec_structures['ec_s_3'], ec_structures['ec_s_masks_3'] = self.ec_structure_3(ec_structures['ec_s_2'],
