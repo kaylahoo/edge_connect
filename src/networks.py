@@ -123,6 +123,7 @@ class InpaintGenerator(BaseNetwork):
             print(ec_textures['ec_t_masks_0'].shape)
             ec_textures['ec_t_1'], ec_textures['ec_t_masks_1'] = self.ec_texture_1(ec_textures['ec_t_0'],
                                                                                    ec_textures['ec_t_masks_0'])
+            print(ec_textures['ec_t_masks_1'].shape)
             ec_textures['ec_t_2'], ec_textures['ec_t_masks_2'] = self.ec_texture_2(ec_textures['ec_t_1'],
                                                                                    ec_textures['ec_t_masks_1'])
             ec_textures['ec_t_3'], ec_textures['ec_t_masks_3'] = self.ec_texture_3(ec_textures['ec_t_2'],
