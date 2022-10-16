@@ -122,8 +122,6 @@ class PConvBNActiv(nn.Module):
             self.activation = nn.LeakyReLU(negative_slope=0.2)
 
     def forward(self, images, masks):
-        print(images.shape)
-        print(masks.shape)
 
         images, masks = self.conv(images, masks)
 
