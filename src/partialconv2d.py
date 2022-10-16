@@ -159,7 +159,7 @@ class PConvBNActiv(nn.Module):
 
 class Depthwise_separable_conv(nn.Module):
 
-    def __init__(self, in_channels, out_channels, kernel_size, stride, padding, groups):
+    def __init__(self, in_channels, out_channels, kernel_size, stride, padding,groups):
         super(Depthwise_separable_conv, self).__init__()
 
         self.depthwise_conv = nn.Sequential(
@@ -167,8 +167,9 @@ class Depthwise_separable_conv(nn.Module):
                 in_channels,
                 out_channels,
                 kernel_size=kernel_size,
+                stride=stride,
                 padding=padding,
-                groups=1
+                groups=groups,
             ),
             nn.SyncBatchNorm(out_channels),
             nn.ReLU(),
@@ -178,8 +179,9 @@ class Depthwise_separable_conv(nn.Module):
                 in_channels,
                 out_channels,
                 kernel_size=kernel_size,
+                stride=stride,
                 padding=padding,
-                groups=1
+                groups=1,
             ),
             nn.SyncBatchNorm(out_channels),
             nn.ReLU(),

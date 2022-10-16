@@ -45,7 +45,7 @@ class BaseNetwork(nn.Module):
 class InpaintGenerator(BaseNetwork):
     #class Generator(nn.Module):
 
-        def __init__(self, image_in_channels=3, edge_in_channels=2, out_channels=3, init_weights=True):
+        def __init__(self, image_in_channels=4, edge_in_channels=4, out_channels=3, init_weights=True):
             super(InpaintGenerator, self).__init__()
 
             self.freeze_ec_bn = False
@@ -107,11 +107,11 @@ class InpaintGenerator(BaseNetwork):
                 self.init_weights()
 
 
-        def forward(self, images, masks):
+        def forward(self, images_masks, masks):
 
             ec_textures = {}
             ec_structures = {}
-            input_image = images * masks
+            input_image = images_masks
 
             input_texture_mask = torch.cat((masks, masks, masks), dim=1)
             ec_textures['ec_t_0'], ec_textures['ec_t_masks_0'] = input_image, input_texture_mask

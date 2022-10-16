@@ -248,12 +248,14 @@ class InpaintingModel(BaseModel):
         return outputs, gen_loss, dis_loss, logs
 
     def forward(self, images, masks):
-        #images_masked = (images * (1 - masks).float()) + masks
+        # images_masked = (images * (1 - masks).float()) + masks
         images_masked = images * masks.float()
+        print(images_masked)
         #inputs = torch.cat((images_masked, edges), dim=1)
         #outputs = self.generator(inputs)                                    # in: [rgb(3) + edge(1)]
-        inputs = torch.cat((images_masked, masks), dim=1)  # input:7
-        outputs = self.generator(inputs)
+        #inputs = torch.cat((images_masked, masks), dim=1)   # in: [rgb(3) + masks(1)]
+
+        outputs = self.generator(images_masked,masks)
         return outputs
 
     def backward(self, gen_loss=None, dis_loss=None):
