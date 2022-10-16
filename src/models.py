@@ -256,7 +256,7 @@ class InpaintingModel(BaseModel):
         inputs = torch.cat((images_masked, masks), dim=1)   # in: [rgb(3) + masks(1)]
 
 
-        outputs = self.generator(inputs,masks)
+        outputs = self.generator(inputs,masks)#inputs = 4
 
         print(outputs.shape)
         return outputs
