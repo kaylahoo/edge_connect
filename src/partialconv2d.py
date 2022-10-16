@@ -124,6 +124,8 @@ class PConvBNActiv(nn.Module):
     def forward(self, images, masks):
 
         images, masks = self.conv(images, masks)
+        print(images.shape)
+        print(masks.shape)
         if hasattr(self, 'bn'):
             images = self.bn(images)
         if hasattr(self, 'activation'):
