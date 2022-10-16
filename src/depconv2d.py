@@ -50,7 +50,8 @@ class Depthwise_separable_conv(nn.Module):
                 padding=padding,
                 groups=groups,
             ),
-            nn.SyncBatchNorm(out_channels),
+            #nn.SyncBatchNorm(out_channels),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU(),
         )
         self.pointwise_conv = nn.Sequential(
@@ -62,7 +63,7 @@ class Depthwise_separable_conv(nn.Module):
                 padding=padding,
                 groups=1,
             ),
-            nn.SyncBatchNorm(out_channels),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU(),
         )
 
