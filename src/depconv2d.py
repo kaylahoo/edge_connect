@@ -30,8 +30,7 @@ class DepConvBNActiv(nn.Module):
 
 
         images, masks = self.Dconv(images, masks)
-        print('here', images.shape)
-        print('here', masks.shape)
+
 
         return images, masks
 
@@ -70,12 +69,10 @@ class Depthwise_separable_conv(nn.Module):
     def forward(self, images, masks):
         images = self.depthwise_conv(images)
         masks = self.depthwise_conv(masks)
-        print('?new', images.shape)
-        print('?new', masks.shape)
+
 
         images = self.pointwise_conv(images)
         masks = self.pointwise_conv(masks)
-        print('new',images.shape)
-        print('new', masks.shape)
+
 
         return images, masks
