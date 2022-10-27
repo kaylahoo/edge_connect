@@ -53,9 +53,11 @@ class Depthwise_separable_conv(nn.Module):
             #nn.BatchNorm2d(out_channels),
             nn.ReLU(),
         )
+    def __init__(self,in_channels,out_channels):
+        super(Depthwise_separable_conv)
         self.pointwise_conv = nn.Sequential(
             nn.Conv2d(
-                in_channels=out_channels,
+                in_channels=in_channels,
                 out_channels=out_channels,
                 kernel_size=1,
                 stride=1,
