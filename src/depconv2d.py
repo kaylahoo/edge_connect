@@ -9,7 +9,7 @@ class DepConvBNActiv(nn.Module):
         super(DepConvBNActiv, self).__init__()
         if sample == 'down-31':
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=31, stride=2,
-                                                  padding=15, groups=4)
+                                                  padding=15, groups=in_channels)
 
         elif sample == 'down-29':
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=29, stride=2, padding=14,
@@ -49,20 +49,21 @@ class Depthwise_separable_conv(nn.Module):
                 padding=padding,
                 groups=groups,
             ),
-            # nn.SyncBatchNorm(out_channels),
-            nn.BatchNorm2d(out_channels),
+            nn.SyncBatchNorm(out_channels),
+            #nn.BatchNorm2d(out_channels),
             nn.ReLU(),
         )
         self.pointwise_conv = nn.Sequential(
             nn.Conv2d(
                 in_channels=out_channels,
                 out_channels=out_channels,
-                kernel_size=kernel_size,
-                stride=stride,
-                padding=padding,
+                kernel_size=1,
+                stride=1,
+                padding=0,
                 groups=1,
             ),
-            nn.BatchNorm2d(out_channels),
+            nn.SyncBatchNorm(out_channels),
+            #nn.BatchNorm2d(out_channels),
             nn.ReLU(),
         )
 
