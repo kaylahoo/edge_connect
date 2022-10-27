@@ -107,7 +107,7 @@ class InpaintGenerator(BaseNetwork):
             self.init_weights()
 
     def forward(self, images_masks, masks):
-
+#texture
         ec_textures = {}
         ec_structures = {}
         input_image = images_masks
@@ -115,52 +115,58 @@ class InpaintGenerator(BaseNetwork):
         input_texture_mask = torch.cat((masks, masks, masks, masks), dim=1)
 
         ec_textures['ec_t_0'], ec_textures['ec_t_masks_0'] = input_image, input_texture_mask
+        print('t00', ec_structures['ec_t_0'].shape)  # []
+        print('t00', ec_structures['ec_t_masks_0'].shape)  # []
+        ec_textures['ec_t_1'], ec_textures['ec_t_masks_1'] = self.ec_texture_1(ec_textures['ec_t_0'],ec_textures['ec_t_masks_0'])
+        print('t11', ec_structures['ec_t_1'].shape)#[]
+        print('t11', ec_structures['ec_t_masks_1'].shape)#[]
+        ec_textures['ec_t_2'], ec_textures['ec_t_masks_2'] = self.ec_texture_2(ec_textures['ec_t_1'],ec_textures['ec_t_masks_1'])
+        print('t22', ec_structures['ec_t_2'].shape)#[]
+        print('t22', ec_structures['ec_t_masks_2'].shape)#[]
+        ec_textures['ec_t_3'], ec_textures['ec_t_masks_3'] = self.ec_texture_3(ec_textures['ec_t_2'],ec_textures['ec_t_masks_2'])
+        print('t33', ec_structures['ec_t_0'].shape)#[]
+        print('t33', ec_structures['ec_t_masks_0'].shape)#[]
+        ec_textures['ec_t_4'], ec_textures['ec_t_masks_4'] = self.ec_texture_4(ec_textures['ec_t_3'],ec_textures['ec_t_masks_3'])
+        print('t44', ec_structures['ec_t_4'].shape)#[]
+        print('t44', ec_structures['ec_t_masks_4'].shape)#[]
+        ec_textures['ec_t_5'], ec_textures['ec_t_masks_5'] = self.ec_texture_5(ec_textures['ec_t_4'],ec_textures['ec_t_masks_4'])
+        print('t55', ec_structures['ec_t_5'].shape)#[]
+        print('t55', ec_structures['ec_t_masks_5'].shape)#[]
+        ec_textures['ec_t_6'], ec_textures['ec_t_masks_6'] = self.ec_texture_6(ec_textures['ec_t_5'],ec_textures['ec_t_masks_5'])
+        print('t66', ec_structures['ec_t_6'].shape)#[]
+        print('t66', ec_structures['ec_t_masks_6'].shape)#[]
+        ec_textures['ec_t_7'], ec_textures['ec_t_masks_7'] = self.ec_texture_7(ec_textures['ec_t_6'],ec_textures['ec_t_masks_6'])
+        print('t7', ec_textures['ec_t_7'].shape)#[2,512,2,2]
+        print('t7m', ec_textures['ec_t_masks_7'].shape)#[2,512,2,2]
 
-        ec_textures['ec_t_1'], ec_textures['ec_t_masks_1'] = self.ec_texture_1(ec_textures['ec_t_0'],
-                                                                               ec_textures['ec_t_masks_0'])
-
-        ec_textures['ec_t_2'], ec_textures['ec_t_masks_2'] = self.ec_texture_2(ec_textures['ec_t_1'],
-                                                                               ec_textures['ec_t_masks_1'])
-        ec_textures['ec_t_3'], ec_textures['ec_t_masks_3'] = self.ec_texture_3(ec_textures['ec_t_2'],
-                                                                               ec_textures['ec_t_masks_2'])
-        ec_textures['ec_t_4'], ec_textures['ec_t_masks_4'] = self.ec_texture_4(ec_textures['ec_t_3'],
-                                                                               ec_textures['ec_t_masks_3'])
-        ec_textures['ec_t_5'], ec_textures['ec_t_masks_5'] = self.ec_texture_5(ec_textures['ec_t_4'],
-                                                                               ec_textures['ec_t_masks_4'])
-        ec_textures['ec_t_6'], ec_textures['ec_t_masks_6'] = self.ec_texture_6(ec_textures['ec_t_5'],
-                                                                               ec_textures['ec_t_masks_5'])
-        ec_textures['ec_t_7'], ec_textures['ec_t_masks_7'] = self.ec_texture_7(ec_textures['ec_t_6'],
-                                                                               ec_textures['ec_t_masks_6'])
-        print('ec7', ec_textures['ec_t_7'].shape)
-        print('ec7m', ec_textures['ec_t_masks_7'].shape)
-
+#structure
         input_structure_mask = torch.cat((masks, masks, masks, masks), dim=1)
         ec_structures['ec_s_0'], ec_structures['ec_s_masks_0'] = input_image, input_structure_mask
-        print('000', ec_structures['ec_s_0'].shape)
-        print('000', ec_structures['ec_s_masks_0'].shape)
+        print('s000', ec_structures['ec_s_0'].shape)#[2,4,256,256]
+        print('s000', ec_structures['ec_s_masks_0'].shape)#[2,4,256,256]
         ec_structures['ec_s_1'], ec_structures['ec_s_masks_1'] = self.ec_structure_1(ec_structures['ec_s_0'],ec_structures['ec_s_masks_0'])
-        print('111', ec_structures['ec_s_1'].shape)
-        print('111', ec_structures['ec_s_masks_1'].shape)
+        print('s111', ec_structures['ec_s_1'].shape)
+        print('s111', ec_structures['ec_s_masks_1'].shape)
         ec_structures['ec_s_2'], ec_structures['ec_s_masks_2'] = self.ec_structure_2(ec_structures['ec_s_1'], ec_structures['ec_s_masks_1'])
-        print('222', ec_structures['ec_s_2'].shape)
-        print('222', ec_structures['ec_s_masks_2'].shape)
+        print('s222', ec_structures['ec_s_2'].shape)
+        print('s222', ec_structures['ec_s_masks_2'].shape)
 
         ec_structures['ec_s_3'], ec_structures['ec_s_masks_3'] = self.ec_structure_3(ec_structures['ec_s_2'],ec_structures['ec_s_masks_2'])
-        print('333', ec_structures['ec_s_3'].shape)
-        print('333', ec_structures['ec_s_masks_3'].shape)
+        print('s33', ec_structures['ec_s_3'].shape)
+        print('s333', ec_structures['ec_s_masks_3'].shape)
 
         ec_structures['ec_s_4'], ec_structures['ec_s_masks_4'] = self.ec_structure_4(ec_structures['ec_s_3'],ec_structures['ec_s_masks_3'])
-        print('444', ec_structures['ec_s_4'].shape)
-        print('444', ec_structures['ec_s_masks_4'].shape)
+        print('4s44', ec_structures['ec_s_4'].shape)
+        print('s444', ec_structures['ec_s_masks_4'].shape)
         ec_structures['ec_s_5'], ec_structures['ec_s_masks_5'] = self.ec_structure_5(ec_structures['ec_s_4'],ec_structures['ec_s_masks_4'])
-        print('555', ec_structures['ec_s_5'].shape)
-        print('555', ec_structures['ec_s_masks_5'].shape)
+        print('s555', ec_structures['ec_s_5'].shape)
+        print('s555', ec_structures['ec_s_masks_5'].shape)
         ec_structures['ec_s_6'], ec_structures['ec_s_masks_6'] = self.ec_structure_6(ec_structures['ec_s_5'],ec_structures['ec_s_masks_5'])
-        print('666', ec_structures['ec_s_6'].shape)
-        print('666', ec_structures['ec_s_masks_6'].shape)
+        print('s666', ec_structures['ec_s_6'].shape)
+        print('s666', ec_structures['ec_s_masks_6'].shape)
         ec_structures['ec_s_7'], ec_structures['ec_s_masks_7'] = self.ec_structure_7(ec_structures['ec_s_6'],ec_structures['ec_s_masks_6'])
-        print('777', ec_structures['ec_s_7'].shape)
-        print('777', ec_structures['ec_s_masks_7'].shape)
+        print('s777', ec_structures['ec_s_7'].shape)
+        print('s777', ec_structures['ec_s_masks_7'].shape)
 
         dc_texture, dc_tecture_mask = ec_structures['ec_s_7'], ec_structures['ec_s_masks_7']  # 2x2
         print('#', dc_texture.shape)

@@ -8,7 +8,7 @@ class DepConvBNActiv(nn.Module):
     def __init__(self, in_channels, out_channels, sample='none-3',groups=None):
         super(DepConvBNActiv, self).__init__()
         if sample == 'down-31':
-            self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=31, stride=1,
+            self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=31, stride=2,
                                                   padding=15, groups=4)
 
         elif sample == 'down-29':
