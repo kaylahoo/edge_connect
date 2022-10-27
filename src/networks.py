@@ -183,7 +183,7 @@ class InpaintGenerator(BaseNetwork):
 
             print(ec_textures[ec_texture_skip].shape)
             dc_texture = torch.cat((dc_texture, ec_textures[ec_texture_skip]), dim=1)  # dc_texture 4x4 ec_textures['ec_t_6'] 4x4
-            print(dc_texture)
+            print('186',dc_texture.shape)
             dc_tecture_mask = torch.cat((dc_tecture_mask, ec_textures[ec_texture_masks_skip]),
                                         dim=1)  # dc_tecture_mask 4x4 ec_textures['ec_t_masks_6'] 4x4
 
