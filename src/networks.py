@@ -115,17 +115,17 @@ class InpaintGenerator(BaseNetwork):
         input_texture_mask = torch.cat((masks, masks, masks, masks), dim=1)
 
         ec_textures['ec_t_0'], ec_textures['ec_t_masks_0'] = input_image, input_texture_mask
-        print('t00', ec_textures['ec_t_0'].shape)  # []
-        print('t00', ec_textures['ec_t_masks_0'].shape)  # []
+        print('t00', ec_textures['ec_t_0'].shape)  # [2,4,256,256]
+        print('t00', ec_textures['ec_t_masks_0'].shape)  # [2,4,256,256]
         ec_textures['ec_t_1'], ec_textures['ec_t_masks_1'] = self.ec_texture_1(ec_textures['ec_t_0'],ec_textures['ec_t_masks_0'])
-        print('t11', ec_textures['ec_t_1'].shape)#[]
-        print('t11', ec_textures['ec_t_masks_1'].shape)#[]
+        print('t11', ec_textures['ec_t_1'].shape)#[2,64,128,128]
+        print('t11', ec_textures['ec_t_masks_1'].shape)#[2,64,128,128]
         ec_textures['ec_t_2'], ec_textures['ec_t_masks_2'] = self.ec_texture_2(ec_textures['ec_t_1'],ec_textures['ec_t_masks_1'])
-        print('t22', ec_textures['ec_t_2'].shape)#[]
-        print('t22', ec_textures['ec_t_masks_2'].shape)#[]
+        print('t22', ec_textures['ec_t_2'].shape)#[2,128,64,64]
+        print('t22', ec_textures['ec_t_masks_2'].shape)#[2,128,64,64]
         ec_textures['ec_t_3'], ec_textures['ec_t_masks_3'] = self.ec_texture_3(ec_textures['ec_t_2'],ec_textures['ec_t_masks_2'])
-        print('t33', ec_textures['ec_t_0'].shape)#[]
-        print('t33', ec_textures['ec_t_masks_0'].shape)#[]
+        print('t33', ec_textures['ec_t_3'].shape)#[]
+        print('t33', ec_textures['ec_t_masks_3'].shape)#[]
         ec_textures['ec_t_4'], ec_textures['ec_t_masks_4'] = self.ec_texture_4(ec_textures['ec_t_3'],ec_textures['ec_t_masks_3'])
         print('t44',ec_textures['ec_t_4'].shape)#[]
         print('t44', ec_textures['ec_t_masks_4'].shape)#[]
