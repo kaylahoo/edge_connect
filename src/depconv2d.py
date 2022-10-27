@@ -49,8 +49,8 @@ class Depthwise_separable_conv(nn.Module):
                 padding=padding,
                 groups=groups,
             ),
-            nn.SyncBatchNorm(out_channels),
-            #nn.BatchNorm2d(out_channels),
+            #nn.SyncBatchNorm(out_channels),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU(),
         )
     #def __init__(self,in_channels,out_channels):
@@ -64,8 +64,8 @@ class Depthwise_separable_conv(nn.Module):
                 padding=0,
                 groups=1,
             ),
-            nn.SyncBatchNorm(out_channels),
-            #nn.BatchNorm2d(out_channels),
+            #nn.SyncBatchNorm(out_channels),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU(),
         )
 
