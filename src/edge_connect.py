@@ -351,35 +351,50 @@ class EdgeConnect():
         if len(self.val_dataset) == 0:
             return
 
-        self.edge_model.eval()
+        #self.edge_model.eval()
         self.inpaint_model.eval()
 
         model = self.config.MODEL
         items = next(self.sample_iterator)
-        images, images_gray, edges, masks = self.cuda(*items)
+        #images, images_gray, edges, masks = self.cuda(*items)
+        images, masks = self.cuda(*items)
 
         # edge model
-        if model == 1:
-            iteration = self.edge_model.iteration
-            inputs = (images_gray * (1 - masks)) + masks
-            outputs = self.edge_model(images_gray, edges, masks)
-            outputs_merged = (outputs * masks) + (edges * (1 - masks))
+        # if model == 1:
+        #     iteration = self.edge_model.iteration
+        #     inputs = (images_gray * (1 - masks)) + masks
+        #     outputs = self.edge_model(images_gray, edges, masks)
+        #     outputs_merged = (outputs * masks) + (edges * (1 - masks))
 
         # inpaint model
-        elif model == 2:
+        # elif model == 2:
+        #     iteration = self.inpaint_model.iteration
+        #     inputs = (images * (1 - masks)) + masks
+        #     outputs = self.inpaint_model(images, masks)
+        #     outputs_merged = (outputs * masks) + (images * (1 - masks))
+        #
+        # # inpaint with edge model / joint model
+        # else:
+        #     iteration = self.inpaint_model.iteration
+        #     inputs = (images * (1 - masks)) + masks
+        #     outputs = self.edge_model(images_gray, edges, masks).detach()
+        #     edges = (outputs * masks + edges * (1 - masks)).detach()
+        #     outputs = self.inpaint_model(images, edges, masks)
+        #     outputs_merged = (outputs * masks) + (images * (1 - masks))
+        if model == 2:
             iteration = self.inpaint_model.iteration
             inputs = (images * (1 - masks)) + masks
-            outputs = self.inpaint_model(images, edges, masks)
+            outputs = self.inpaint_model(images, masks)
             outputs_merged = (outputs * masks) + (images * (1 - masks))
 
         # inpaint with edge model / joint model
-        else:
-            iteration = self.inpaint_model.iteration
-            inputs = (images * (1 - masks)) + masks
-            outputs = self.edge_model(images_gray, edges, masks).detach()
-            edges = (outputs * masks + edges * (1 - masks)).detach()
-            outputs = self.inpaint_model(images, edges, masks)
-            outputs_merged = (outputs * masks) + (images * (1 - masks))
+        # else:
+        #     iteration = self.inpaint_model.iteration
+        #     inputs = (images * (1 - masks)) + masks
+        #     #outputs = self.edge_model(image, masks).detach()
+        #     #edges = (outputs * masks + edges * (1 - masks)).detach()
+        #     outputs = self.inpaint_model(images, masks)
+        #     outputs_merged = (outputs * masks) + (images * (1 - masks))
 
         if it is not None:
             iteration = it
@@ -391,7 +406,7 @@ class EdgeConnect():
         images = stitch_images(
             self.postprocess(images),
             self.postprocess(inputs),
-            self.postprocess(edges),
+            #self.postprocess(edges),
             self.postprocess(outputs),
             self.postprocess(outputs_merged),
             img_per_row = image_per_row
