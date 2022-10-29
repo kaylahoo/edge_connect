@@ -192,17 +192,19 @@ class InpaintGenerator(BaseNetwork):
             # self.dc_texture_7 = PConvBNActiv(512 + 512, 512, activ='leaky')  self.dc_texture_7(dc_texture, dc_tecture_mask)
 
         dc_structure, dc_structure_masks = ec_textures['ec_t_7'], ec_textures['ec_t_masks_7']
+        print('195',dc_structure.shape)
         for _ in range(7, 0, -1):
             ec_structure_skip = 'ec_s_{:d}'.format(_ - 1)
             ec_structure_masks_skip = 'ec_s_masks_{:d}'.format(_ - 1)
             dc_conv = 'dc_structure_{:d}'.format(_)
-
+            print('200', ec_structure_skip,ec_structure_masks_skip,dc_conv)
             dc_structure = F.interpolate(dc_structure, scale_factor=2, mode='bilinear')
+            print('202', dc_structure.shape)
             dc_structure_masks = F.interpolate(dc_structure_masks, scale_factor=2, mode='nearest')
-
+            print('204', dc_structure_masks.shape)
             dc_structure = torch.cat((dc_structure, ec_structures[ec_structure_skip]), dim=1)
             dc_structure_masks = torch.cat((dc_structure_masks, ec_structures[ec_structure_masks_skip]), dim=1)
-
+            print('207', dc_structure.shape,dc_structure_masks.shape)
             dc_structure, dc_structure_masks = getattr(self, dc_conv)(dc_structure, dc_structure_masks)
 
         output1 = torch.cat(dc_texture, dc_structure)
