@@ -208,7 +208,7 @@ class InpaintGenerator(BaseNetwork):
             print('207', dc_structure.shape,dc_structure_masks.shape)
             dc_structure, dc_structure_masks = getattr(self, dc_conv)(dc_structure, dc_structure_masks)
         print('210')
-        output1 = torch.cat(dc_texture, dc_structure)
+        output1 = torch.cat((dc_texture, dc_structure),dim=1)
         output2 = self.fusion_layer1(output1)
         output3 = self.fusion_layer2(output2)
         output4 = self.out_layer(output3)
