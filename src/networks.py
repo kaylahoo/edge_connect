@@ -46,7 +46,7 @@ class BaseNetwork(nn.Module):
 class InpaintGenerator(BaseNetwork):
     # class Generator(nn.Module):
 
-    def __init__(self, image_in_channels=4, edge_in_channels=4, out_channels=3, init_weights=True):
+    def __init__(self, image_in_channels=4, edge_in_channels=4, out_channels=4, init_weights=True):
         super(InpaintGenerator, self).__init__()
 
         self.freeze_ec_bn = False
@@ -113,7 +113,7 @@ class InpaintGenerator(BaseNetwork):
         input_image = images_masks
 
         input_texture_mask = torch.cat((masks, masks, masks,masks), dim=1)
-        print('116',input_texture_mask.shape)
+        print('116',input_texture_mask.shape)#[8,4,256,256]
 
         ec_textures['ec_t_0'], ec_textures['ec_t_masks_0'] = input_image, input_texture_mask
         print('t00', ec_textures['ec_t_0'].shape)  # [2,4,256,256]
@@ -141,7 +141,7 @@ class InpaintGenerator(BaseNetwork):
         print('t7m', ec_textures['ec_t_masks_7'].shape)#[2,512,2,2]
 
 #structure
-        input_structure_mask = torch.cat((masks, masks, masks, masks), dim=1)
+        input_structure_mask = torch.cat((masks, masks, masks,masks), dim=1)
         ec_structures['ec_s_0'], ec_structures['ec_s_masks_0'] = input_image, input_structure_mask
         print('s000', ec_structures['ec_s_0'].shape)#[2,4,256,256]
         print('s000', ec_structures['ec_s_masks_0'].shape)#[2,4,256,256]

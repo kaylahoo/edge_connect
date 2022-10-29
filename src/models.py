@@ -258,7 +258,7 @@ class InpaintingModel(BaseModel):
 
         outputs = self.generator(inputs,masks)#inputs = 4
 
-        print(outputs.shape)
+        print('261',outputs.shape)
         return outputs
 
     def backward(self, gen_loss=None, dis_loss=None):
