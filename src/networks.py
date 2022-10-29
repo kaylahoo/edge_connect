@@ -88,7 +88,7 @@ class InpaintGenerator(BaseNetwork):
         self.dc_structure_4 = DepConvBNActiv(512 + 256, 256, groups=256)
         self.dc_structure_3 = DepConvBNActiv(256 + 128, 128, groups=128)
         self.dc_structure_2 = DepConvBNActiv(128 + 64, 64, groups=64)
-        self.dc_structure_1 = DepConvBNActiv(64+out_channels, 64, groups=64)
+        self.dc_structure_1 = DepConvBNActiv(64+out_channels, 64, groups=4)
 
         self.fusion_layer1 = nn.Sequential(
             nn.Conv2d(64 + 64, 64, kernel_size=3, stride=1, padding=1),
