@@ -18,19 +18,19 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-def resize(img, height, width, centerCrop=True):
-    imgh, imgw = img.shape[0:2]
-
-    if centerCrop and imgh != imgw:
-        # center crop
-        side = np.minimum(imgh, imgw)
-        j = (imgh - side) // 2
-        i = (imgw - side) // 2
-        img = img[j:j + side, i:i + side, ...]
-
-    img = imresize(img, [height, width], interp='bilinear')
-
-    return img
+# def resize(img, height, width, centerCrop=True):
+#     imgh, imgw = img.shape[0:2]
+#
+#     if centerCrop and imgh != imgw:
+#         # center crop
+#         side = np.minimum(imgh, imgw)
+#         j = (imgh - side) // 2
+#         i = (imgw - side) // 2
+#         img = img[j:j + side, i:i + side, ...]
+#
+#     img = imresize(img, [height, width], interp='bilinear')
+#
+#     return img
 
 def compare_mae(img_true, img_test):
     img_true = img_true.astype(np.float32)
@@ -52,18 +52,18 @@ names = []
 index = 1
 
 files = list(glob(path_true + '/*.jpg')) + list(glob(path_true + '/*.png'))
-i = 0
+# i = 0
 for fn in sorted(files):
-    if i >= 2000:
-        break
+    # if i >= 2000:
+    #     break
     name = basename(str(fn))
     names.append(name)
 
     img_gt = (imread(str(fn)) / 255.0).astype(np.float32)
     img_pred = (imread(path_pred + '/' + basename(str(fn))) / 255.0).astype(np.float32)
 
-    img_gt = resize(img_gt, 256, 256)
-    img_pred = resize(img_pred, 256, 256)
+    # img_gt = resize(img_gt, 256, 256)
+    # img_pred = resize(img_pred, 256, 256)
 
     img_gt = rgb2gray(img_gt)
     img_pred = rgb2gray(img_pred)
@@ -88,7 +88,7 @@ for fn in sorted(files):
             "MAE: %.4f" % round(np.mean(mae), 4),
         )
     index += 1
-    i += 1
+    # i += 1
 
 np.savez(args.output_path + '/metrics.npz', psnr=psnr, ssim=ssim, mae=mae, names=names)
 print(
