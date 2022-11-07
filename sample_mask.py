@@ -28,8 +28,8 @@ def get_mask():
     dst_path = "/home/lab265/lab265/csy/datasets/irregular_mask"
     f = os.listdir(mask_path)
     file_list = []
-    get_file_len = 100  # 每间隔n个
-    get_file_num = 5  # 取n个样本
+    get_file_len = 2000  # 每间隔n个
+    get_file_num = 100  # 取n个样本
     iter_num = 0
     for i, n in enumerate(f):
         dir_name = str(iter_num) + '-' + str(iter_num + 10)
