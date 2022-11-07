@@ -35,10 +35,10 @@ def get_mask():
         dir_name = str(iter_num) + '-' + str(iter_num + 10)
         if (i + 1) % get_file_len == 0:
             index = getRandomList((i + 1) - get_file_len, get_file_len, get_file_num)
-            os.makedirs(dst_path + dir_name)
+            os.makedirs(dst_path + '/' + dir_name)
             for j in index:
                 file_list.append(mask_path + f[j])
-                shutil.copy(mask_path + f[j], dst_path + dir_name + "/" + f[j])
+                shutil.copy(mask_path + '/' + f[j], dst_path + dir_name + "/" + f[j])
             iter_num = iter_num + 10
 
     print(file_list)
