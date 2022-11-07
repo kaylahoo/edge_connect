@@ -23,10 +23,10 @@ def getRandomList(start, get_len, get_size):
 
 
 def get_mask():
-    #mask_path = "../preImage"  # mask绝对路径
+    # mask_path = "../preImage"  # mask绝对路径
     mask_path = "/home/lab265/lab265/csy/datasets/irregular_mask/masks"  # mask绝对路径
     dst_path = "/home/lab265/lab265/csy/datasets/irregular_mask"
-    f = os.listdir(mask_path)
+    f = sorted(os.listdir(mask_path))
     file_list = []
     get_file_len = 2000  # 每间隔n个
     get_file_num = 100  # 取n个样本
