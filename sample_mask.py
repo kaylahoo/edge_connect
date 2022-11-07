@@ -38,7 +38,7 @@ def get_mask():
             os.makedirs(dst_path + '/' + dir_name)
             for j in index:
                 file_list.append(mask_path + f[j])
-                shutil.copy(mask_path + '/' + f[j], dst_path + dir_name + "/" + f[j])
+                shutil.copy(mask_path + '/' + f[j], dst_path + '/' + dir_name + "/" + f[j])
             iter_num = iter_num + 10
 
     print(file_list)
