@@ -46,10 +46,7 @@ def get_mask(name, ratio, get_len, get_num):
                 file_list.append(mask_path + f[j])
                 shutil.copy(mask_path + '/' + f[j], dst_path + '/' + dir_name + "/" + f[j])
 
-            if ratio == 10:
-                iter_num = iter_num + 10
-            else:
-                iter_num = iter_num + 20
+            iter_num = iter_num + ratio
 
 
 parser = argparse.ArgumentParser()
