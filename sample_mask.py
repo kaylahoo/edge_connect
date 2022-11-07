@@ -32,7 +32,7 @@ def get_mask():
     get_file_num = 5  # 取n个样本
     iter_num = 0
     for i, n in enumerate(f):
-        dir_name = str(iter_num) + '~' + str(iter_num + 10)
+        dir_name = str(iter_num) + '-' + str(iter_num + 10)
         if (i + 1) % get_file_len == 0:
             index = getRandomList((i + 1) - get_file_len, get_file_len, get_file_num)
             os.makedirs(dst_path + dir_name)
