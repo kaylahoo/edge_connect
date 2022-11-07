@@ -35,9 +35,9 @@ def get_mask(name, ratio, get_len, get_num):
     for i, n in enumerate(f):
 
         if name == 'celeba':
-            dir_name = 'celeba' + str(iter_num) + '-' + str(iter_num + 10)
+            dir_name = 'celeba' + str(iter_num) + '-' + str(iter_num + ratio)
         else:
-            dir_name = 'psv' + str(iter_num) + '-' + str(iter_num + 10)
+            dir_name = 'psv' + str(iter_num) + '-' + str(iter_num + ratio)
 
         if (i + 1) % get_file_len == 0:
             index = getRandomList((i + 1) - get_file_len, get_file_len, get_file_num)
