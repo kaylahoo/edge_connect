@@ -1,6 +1,7 @@
 import os
 import random
 import shutil
+import argparse
 
 
 def getRandomList(start, get_len, get_size):
@@ -22,26 +23,40 @@ def getRandomList(start, get_len, get_size):
     return c
 
 
-def get_mask():
+def get_mask(name, ratio, get_len, get_num):
     # mask_path = "../preImage"  # mask绝对路径
     mask_path = "/home/lab265/lab265/csy/datasets/irregular_mask/masks"  # mask绝对路径
     dst_path = "/home/lab265/lab265/csy/datasets/irregular_mask"
     f = sorted(os.listdir(mask_path))
     file_list = []
-    get_file_len = 2000  # 每间隔n个
-    get_file_num = 100  # 取n个样本
+    get_file_len = get_len  # 每间隔n个
+    get_file_num = get_num  # 取n个样本
     iter_num = 0
     for i, n in enumerate(f):
-        dir_name = str(iter_num) + '-' + str(iter_num + 10)
+
+        if name == 'celeba':
+            dir_name = 'celeba' + str(iter_num) + '-' + str(iter_num + 10)
+        else:
+            dir_name = 'psv' + str(iter_num) + '-' + str(iter_num + 10)
+
         if (i + 1) % get_file_len == 0:
             index = getRandomList((i + 1) - get_file_len, get_file_len, get_file_num)
             os.makedirs(dst_path + '/' + dir_name)
             for j in index:
                 file_list.append(mask_path + f[j])
                 shutil.copy(mask_path + '/' + f[j], dst_path + '/' + dir_name + "/" + f[j])
-            iter_num = iter_num + 10
 
-    print(file_list)
+            if ratio == 10:
+                iter_num = iter_num + 10
+            else:
+                iter_num = iter_num + 20
 
 
-get_mask()
+parser = argparse.ArgumentParser()
+parser.add_argument('--name', type=str, default='celeba')
+parser.add_argument('--ratio', type=int, default=10)
+parser.add_argument('--get_len', type=int, default=2000)
+parser.add_argument('--get_num', type=int, default=100)
+args = parser.parse_args()
+
+get_mask(args.name, args.ratio, args.get_len, args.get_num)
