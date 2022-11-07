@@ -18,19 +18,19 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-# def resize(img, height, width, centerCrop=True):
-#     imgh, imgw = img.shape[0:2]
-#
-#     if centerCrop and imgh != imgw:
-#         # center crop
-#         side = np.minimum(imgh, imgw)
-#         j = (imgh - side) // 2
-#         i = (imgw - side) // 2
-#         img = img[j:j + side, i:i + side, ...]
-#
-#     img = imresize(img, [height, width], interp='bilinear')
-#
-#     return img
+def resize(img, height, width, centerCrop=True):
+    imgh, imgw = img.shape[0:2]
+
+    if centerCrop and imgh != imgw:
+        # center crop
+        side = np.minimum(imgh, imgw)
+        j = (imgh - side) // 2
+        i = (imgw - side) // 2
+        img = img[j:j + side, i:i + side, ...]
+
+    img = imresize(img, [height, width], interp='bilinear')
+
+    return img
 
 def compare_mae(img_true, img_test):
     img_true = img_true.astype(np.float32)
@@ -62,8 +62,8 @@ for fn in sorted(files):
     img_gt = (imread(str(fn)) / 255.0).astype(np.float32)
     img_pred = (imread(path_pred + '/' + basename(str(fn))) / 255.0).astype(np.float32)
 
-    # img_gt = resize(img_gt, 256, 256)
-    # img_pred = resize(img_pred, 256, 256)
+    img_gt = resize(img_gt, 256, 256)
+    img_pred = resize(img_pred, 256, 256)
 
     img_gt = rgb2gray(img_gt)
     img_pred = rgb2gray(img_pred)
