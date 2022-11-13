@@ -5,7 +5,7 @@ from torch import nn
 
 class DepConvBNActiv(nn.Module):
 
-    def __init__(self, in_channels, out_channels, sample='none-3',groups=None):
+    def __init__(self, in_channels, out_channels, sample='none-3',groups=None, activ='relu'):
         super(DepConvBNActiv, self).__init__()
         if sample == 'down-31':
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=31, stride=2,
@@ -26,6 +26,13 @@ class DepConvBNActiv(nn.Module):
             self.Dconv = Depthwise_separable_conv(in_channels, out_channels, kernel_size=3, stride=1, padding=1,
                                                   groups=groups)
 
+            self.bn = nn.BatchNorm2d(out_channels)
+
+        if activ == 'relu':
+            self.activation = nn.ReLU6()
+        elif activ == 'leaky':
+            self.activation = nn.LeakyReLU(negative_slope=0.2)
+
     def forward(self, images, masks):
 
 
@@ -35,6 +42,50 @@ class DepConvBNActiv(nn.Module):
         return images, masks
 
 
+# class Depthwise_separable_conv(nn.Module):
+#
+#     def __init__(self, in_channels, out_channels, kernel_size, stride, padding, groups):
+#         super(Depthwise_separable_conv, self).__init__()
+#
+#         self.depthwise_conv = nn.Sequential(
+#             nn.Conv2d(
+#                 in_channels=in_channels,
+#                 out_channels=out_channels,
+#                 kernel_size=kernel_size,
+#                 stride=stride,
+#                 padding=padding,
+#                 groups=groups,
+#             ),
+#             #nn.SyncBatchNorm(out_channels),
+#             nn.BatchNorm2d(out_channels),
+#             nn.ReLU(),
+#         )
+#     #def __init__(self,in_channels,out_channels):
+#         #super(Depthwise_separable_conv)
+#         self.pointwise_conv = nn.Sequential(
+#             nn.Conv2d(
+#                 in_channels=out_channels,
+#                 out_channels=out_channels,
+#                 kernel_size=1,
+#                 stride=1,
+#                 padding=0,
+#                 groups=1,
+#             ),
+#             #nn.SyncBatchNorm(out_channels),
+#             nn.BatchNorm2d(out_channels),
+#             nn.ReLU(),
+#         )
+#
+#     def forward(self, images, masks):
+#         images = self.depthwise_conv(images)
+#         masks = self.depthwise_conv(masks)
+#
+#
+#         images = self.pointwise_conv(images)
+#         masks = self.pointwise_conv(masks)
+#
+#
+#         return images, masks
 class Depthwise_separable_conv(nn.Module):
 
     def __init__(self, in_channels, out_channels, kernel_size, stride, padding, groups):
@@ -51,7 +102,7 @@ class Depthwise_separable_conv(nn.Module):
             ),
             #nn.SyncBatchNorm(out_channels),
             nn.BatchNorm2d(out_channels),
-            nn.ReLU(),
+            nn.ReLU6(),
         )
     #def __init__(self,in_channels,out_channels):
         #super(Depthwise_separable_conv)
@@ -66,7 +117,7 @@ class Depthwise_separable_conv(nn.Module):
             ),
             #nn.SyncBatchNorm(out_channels),
             nn.BatchNorm2d(out_channels),
-            nn.ReLU(),
+            nn.ReLU6(),
         )
 
     def forward(self, images, masks):
