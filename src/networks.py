@@ -74,7 +74,7 @@ class InpaintGenerator(BaseNetwork):
         # -------------------------
         # large encoder-decoder
         # -------------------------
-        self.ec_structure_1 = DepConvBNActiv(edge_in_channels, 64, sample='down-31', groups=edge_in_channels)
+        self.ec_structure_1 = DepConvBNActiv(edge_in_channels, 64, bn=False, sample='down-31', groups=edge_in_channels)
         self.ec_structure_2 = DepConvBNActiv(64, 128, sample='down-29', groups=64)
         self.ec_structure_3 = DepConvBNActiv(128, 256, sample='down-27', groups=128)
         self.ec_structure_4 = DepConvBNActiv(256, 512, sample='down-13', groups=256)
