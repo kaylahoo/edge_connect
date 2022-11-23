@@ -112,8 +112,8 @@ class Depthwise_separable_conv(nn.Module):
                 padding=padding,
                 groups=groups,
             ),
-            #nn.SyncBatchNorm(out_channels),
-            nn.BatchNorm2d(out_channels),
+            nn.SyncBatchNorm(out_channels),
+            #nn.BatchNorm2d(out_channels),
             nn.ReLU6(),
         )
         # def __init__(self,in_channels,out_channels):
@@ -127,8 +127,8 @@ class Depthwise_separable_conv(nn.Module):
                 padding=0,
                 groups=1,
             ),
-            #nn.SyncBatchNorm(out_channels),
-            nn.BatchNorm2d(out_channels),
+            nn.SyncBatchNorm(out_channels),
+            #nn.BatchNorm2d(out_channels),
             nn.ReLU6(),
         )
         # self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
