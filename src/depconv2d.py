@@ -6,7 +6,7 @@ import sys
 
 # from timm.models.layers import DropPath
 #from src.SELayer import SELayer
-from src.drop import drop_path
+#from src.drop import drop_path
 
 
 class DepConvBNActiv(nn.Module):
