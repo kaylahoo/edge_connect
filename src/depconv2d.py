@@ -107,11 +107,11 @@ class DepConvBNActiv(nn.Module):
             images_s = self.small_res(images)  # 3,1,1
             masks_s = self.small_res(masks)  # 3,1,1
 
-            images_l = self.se_res(images_l)
-            masks_l = self.se_res(masks_l)
+            #images_l = self.se_res(images_l)
+            #masks_l = self.se_res(masks_l)
 
-            images_s = self.se_res(images_s)
-            masks_s = self.se_res(masks_s)
+            #images_s = self.se_res(images_s)
+            #masks_s = self.se_res(masks_s)
 
             images_i = self.increase_channels(images)
             masks_i = self.increase_channels(masks)
