@@ -123,9 +123,9 @@ class DepConvBNActiv(nn.Module):
             #masks = self.decrease_channels(masks)
 
         images, masks = self.Dconv(images, masks)
-        if self.small_res is not None:  # 判断上采样的条件
-            images = self.se_dconv(images)
-            masks = self.se_dconv(masks)
+        #if self.small_res is not None:  # 判断上采样的条件
+            #images = self.se_dconv(images)
+            #masks = self.se_dconv(masks)
 
         return images, masks
 
