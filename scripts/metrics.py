@@ -60,6 +60,7 @@ for fn in sorted(files):
     names.append(name)
 
     img_gt = (imread(str(fn)) / 255.0).astype(np.float32)
+    print(img_gt)
     img_pred = (imread(path_pred + '/' + basename(str(fn))) / 255.0).astype(np.float32)
 
     img_gt = resize(img_gt, 256, 256)
